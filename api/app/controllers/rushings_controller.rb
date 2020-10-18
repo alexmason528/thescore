@@ -6,7 +6,6 @@ class RushingsController < ApplicationController
       end
 
       format.all do
-        # response.headers['Content-Type'] = 'application/json'
         render json: rushings.page(page).per(page_size), meta: meta
       end
     end
@@ -25,15 +24,15 @@ class RushingsController < ApplicationController
   def meta
     {
       total: rushings.count,
-      page: page,
+      current: page,
       page_size: page_size
     }
   end
 
   def rushings
     list = Rushing.all
-    list = list.where("player like ?", "%#{params[:q]}%") if params[:q].present?
-    list = list.order("#{params[:order_by]} #{params[:dir] ? :asc : :desc}") if params[:order_by].present?
+    list = list.where("player like ?", "%#{params[:player]}%") if params[:player].present?
+    list = list.order("#{params[:order_by]} #{params[:dir] == "ascend" ? :asc : :desc}") if params[:order_by].present?
     list
   end
 end
