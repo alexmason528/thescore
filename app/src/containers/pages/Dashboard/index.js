@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Button, Card, Input, Space, Table } from 'antd'
+import { Button, Card, Input, Space, Table, message } from 'antd'
 import { SearchOutlined, DownloadOutlined } from '@ant-design/icons'
-import { API_BASE_URL } from 'config/base'
+import axios from 'axios'
 import {
   listRushing,
   selectRushingData,
   selectRushingLoading,
 } from 'store/modules/rushing'
+import { downloadFile } from 'utils/file-downloader'
+import columns from './columns'
 
 const Dashboard = () => {
   const rushingData = useSelector(selectRushingData)
@@ -15,6 +17,7 @@ const Dashboard = () => {
 
   const dispatch = useDispatch()
   const [playerName, setPlayerName] = useState('')
+  const [isDownloading, setIsDownloading] = useState(false)
 
   useEffect(() => {
     dispatch(listRushing())
@@ -30,7 +33,7 @@ const Dashboard = () => {
         page: current,
         page_size: pageSize,
       },
-      player && { player },
+      player && { player: player[0] },
       field && order && { order_by: field, dir: order }
     )
 
@@ -38,16 +41,19 @@ const Dashboard = () => {
     setPlayerName(player || '')
   }
 
-  function handleDownload() {
-    const params = playerName ? `?player=${playerName}` : ''
-    const url = `${API_BASE_URL}/rushings.csv/${params}`
+  async function handleDownload() {
+    try {
+      setIsDownloading(true)
 
-    const link = document.createElement('a')
-    link.setAttribute('download', 'rushings.csv')
-    link.href = url
-    document.body.appendChild(link)
-    link.click()
-    link.remove()
+      const params = playerName ? `?player=${playerName}` : ''
+      const res = await axios.get(`/rushings.csv/${params}`)
+
+      downloadFile(res.data, 'text/csv', 'rushings.csv')
+    } catch {
+      message.error('Failed to download file')
+    } finally {
+      setIsDownloading(false)
+    }
   }
 
   function getColumnSearchProps(dataIndex) {
@@ -98,89 +104,18 @@ const Dashboard = () => {
         key: 'player',
         ...getColumnSearchProps('player'),
       },
-      {
-        title: 'Team',
-        dataIndex: 'team',
-        key: 'team',
-      },
-      {
-        title: 'Pos',
-        dataIndex: 'pos',
-        key: 'pos',
-      },
-      {
-        title: 'Att/G',
-        dataIndex: 'att_g',
-        key: 'att_g',
-      },
-      {
-        title: 'Att',
-        dataIndex: 'att',
-        key: 'att',
-      },
-      {
-        title: 'Yds',
-        dataIndex: 'yds',
-        key: 'yds',
-        sorter: true,
-      },
-      {
-        title: 'Avg',
-        dataIndex: 'avg',
-        key: 'avg',
-      },
-      {
-        title: 'Yds/G',
-        dataIndex: 'yds_g',
-        key: 'yds_g',
-      },
-      {
-        title: 'TD',
-        dataIndex: 'td',
-        key: 'td',
-        sorter: true,
-      },
-      {
-        title: 'Lng',
-        dataIndex: 'lng',
-        key: 'lng',
-        sorter: true,
-      },
-      {
-        title: '1st',
-        dataIndex: 'fir',
-        key: 'fir',
-      },
-      {
-        title: '1st%',
-        dataIndex: 'first_percent',
-        key: 'yds_g',
-      },
-      {
-        title: '20+',
-        dataIndex: 'twenty_plus',
-        key: 'twenty_plus',
-      },
-      {
-        title: '40+',
-        dataIndex: 'forty_plus',
-        key: 'forty_plus',
-      },
-      {
-        title: 'FUM',
-        dataIndex: 'fum',
-        key: 'fum',
-      },
+      ...columns,
     ]
   }
 
   return (
     <Card className="dashboard">
       <Button
-        onClick={handleDownload}
         type="primary"
         icon={<DownloadOutlined />}
         style={{ marginBottom: 8, float: 'right' }}
+        loading={isDownloading}
+        onClick={handleDownload}
       >
         Download
       </Button>
@@ -191,7 +126,7 @@ const Dashboard = () => {
         bordered
         loading={isLoading}
         rowKey="id"
-        scroll={{ x: true, y: 600 }}
+        scroll={{ x: true, y: 550 }}
         pagination={{
           total: rushingData.meta.total,
           pageSize: rushingData.meta.page_size,
