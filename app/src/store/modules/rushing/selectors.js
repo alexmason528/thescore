@@ -2,7 +2,7 @@ import { get } from 'lodash'
 
 export const selectRushingState = (state) => get(state, 'rushing')
 
-export const selectRushings = (state) => get(state, 'rushing.rushings')
+export const selectRushingData = (state) => get(state, 'rushing.data')
 
 export const selectRushingLoading = (state) => get(state, 'rushing.loading')
 

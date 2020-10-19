@@ -1,4 +1,10 @@
-.page {
+.header {
+  position: fixed;
+  width: 100%;
+  z-index: 1;
+}
+
+.logo {
   height: 100%;
 }
 
@@ -7,12 +13,10 @@
   margin-top: 64px;
 }
 
-.header {
-  position: fixed;
-  width: 100%;
-  z-index: 1;
-}
-
 .footer {
   text-align: center;
+}
+
+.page {
+  height: 100%;
 }

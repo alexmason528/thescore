@@ -11,11 +11,9 @@ import 'styles/core.scss'
 axios.defaults.baseURL = API_BASE_URL
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <Routes />
-    </Provider>
-  </React.StrictMode>,
+  <Provider store={store}>
+    <Routes />
+  </Provider>,
   document.getElementById('root')
 )
 
