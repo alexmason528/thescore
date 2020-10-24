@@ -1,5 +1,7 @@
 rushings = JSON.parse(File.read('rushing.json'))
 
+Rushing.destroy_all
+
 rushings.each do |params|
   is_touchdown = params['Lng'].instance_of?(String) && params['Lng'][-1] == 'T'
 

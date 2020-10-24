@@ -66,3 +66,7 @@ If you have any questions regarding requirements, do not hesitate to email your 
 3. Build the project - `make build`
 4. Start the project - `make start`
 5. Stop the project - `make stop`
+
+### Tests
+1. API test `make api-test`
+2. App test `make app-test`

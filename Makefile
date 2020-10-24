@@ -10,3 +10,11 @@ start:
 .PHONY: stop
 stop:
 	docker-compose down
+
+.PHONY: api-test
+api-test:
+	docker-compose run api rspec
+
+.PHONY: app-test
+app-test:
+	docker-compose run app yarn test --coverage --watchAll=false

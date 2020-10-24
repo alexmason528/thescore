@@ -1,9 +1,10 @@
 require 'rails_helper'
 require 'database_cleaner/active_record'
 
+DatabaseCleaner.strategy = :truncation, {:only => %w[rushings]}
+
 RSpec.describe 'Rushings', type: :request do
   before(:all) do
-    DatabaseCleaner.start
     (1..300).each { create(:rushing) }
   end
 
@@ -55,6 +56,6 @@ RSpec.describe 'Rushings', type: :request do
   end
 
   after(:all) do
-    DatabaseCleaner.start
+    DatabaseCleaner.clean
   end
 end
