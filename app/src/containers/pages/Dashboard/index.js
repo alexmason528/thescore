@@ -66,6 +66,7 @@ const Dashboard = () => {
       }) => (
         <div style={{ padding: 8 }}>
           <Input
+            className="search-input"
             placeholder={`Search by ${dataIndex}`}
             value={selectedKeys[0]}
             onChange={(e) => {
@@ -77,10 +78,11 @@ const Dashboard = () => {
           <Space>
             <Button
               type="primary"
-              onClick={confirm}
               icon={<SearchOutlined />}
               size="small"
+              className="search-btn"
               style={{ width: 90 }}
+              onClick={confirm}
             >
               Search
             </Button>

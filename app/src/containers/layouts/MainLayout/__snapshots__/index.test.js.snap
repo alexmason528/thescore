@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MainLayout renders correctly 1`] = `
+<Layout
+  className="page"
+>
+  <Header
+    className="header"
+  >
+    <img
+      alt="Logo"
+      className="logo"
+      src="logo.svg"
+    />
+  </Header>
+  <Content
+    className="content"
+  >
+    <Button
+      block={false}
+      ghost={false}
+      htmlType="button"
+      loading={false}
+    >
+      Click
+    </Button>
+  </Content>
+  <Footer
+    className="footer"
+  >
+    <a
+      href="https://www.thescore.com/"
+      rel="noopener noreferrer"
+      target="_blank"
+    >
+      theScore.com
+    </a>
+  </Footer>
+</Layout>
+`;

@@ -2,7 +2,7 @@ import { handleActions } from 'redux-actions'
 import { successAction, failAction } from 'utils/request-helpers'
 import { LIST_RUSHING } from './actions'
 
-const initialState = {
+export const INITIAL_STATE = {
   data: {
     rushing: [],
     meta: {
@@ -35,5 +35,5 @@ export const reducer = handleActions(
       error: payload,
     }),
   },
-  initialState
+  INITIAL_STATE
 )

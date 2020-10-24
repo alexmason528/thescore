@@ -46,6 +46,7 @@ export default [
     dataIndex: 'lng',
     key: 'lng',
     sorter: true,
+    render: (lng, record) => `${lng}${record.touchdown ? 'T' : ''}`,
   },
   {
     title: '1st',

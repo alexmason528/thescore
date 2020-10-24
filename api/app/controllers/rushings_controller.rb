@@ -6,7 +6,8 @@ class RushingsController < ApplicationController
       end
 
       format.all do
-        render json: rushings.page(page).per(page_size), meta: meta
+        @rushings = rushings.page(page).per(page_size)
+        render json: rushings, meta: meta
       end
     end
   end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_18_040914) do
+ActiveRecord::Schema.define(version: 2020_10_23_023523) do
 
   create_table "rushings", force: :cascade do |t|
     t.string "player", null: false
@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 2020_10_18_040914) do
     t.float "avg", default: 0.0, null: false
     t.float "yds_g", default: 0.0, null: false
     t.float "td", default: 0.0, null: false
-    t.string "lng", null: false
+    t.float "lng", default: 0.0, null: false
     t.float "fir", default: 0.0, null: false
     t.float "first_percent", default: 0.0, null: false
     t.float "twenty_plus", default: 0.0, null: false
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 2020_10_18_040914) do
     t.float "fum", default: 0.0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "touchdown", default: false
   end
 
 end
