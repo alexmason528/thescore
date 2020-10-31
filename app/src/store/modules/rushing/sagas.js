@@ -12,6 +12,16 @@ export const doListRushing = function* ({ payload }) {
   }
 }
 
+export const doListTeam = function* ({ payload }) {
+  try {
+    const res = yield call(axios.get, '/rushings/teams/', payload)
+    yield put(actions.listTeamSuccess(res.data))
+  } catch (error) {
+    yield put(actions.listTeamFail(error))
+  }
+}
+
 export const saga = function* () {
   yield takeEvery(actions.LIST_RUSHING, doListRushing)
+  yield takeEvery(actions.LIST_TEAM, doListTeam)
 }

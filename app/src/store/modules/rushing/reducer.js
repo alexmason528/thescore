@@ -1,6 +1,6 @@
-import { handleActions } from 'redux-actions'
+import { handleActions, combineActions } from 'redux-actions'
 import { successAction, failAction } from 'utils/request-helpers'
-import { LIST_RUSHING } from './actions'
+import { LIST_RUSHING, LIST_TEAM } from './actions'
 
 export const INITIAL_STATE = {
   data: {
@@ -11,13 +11,14 @@ export const INITIAL_STATE = {
       total: 0,
     },
   },
+  teams: [],
   loading: false,
   error: null,
 }
 
 export const reducer = handleActions(
   {
-    [LIST_RUSHING]: (state) => ({
+    [combineActions(LIST_RUSHING, LIST_TEAM)]: (state) => ({
       ...state,
       error: null,
       loading: true,
@@ -29,7 +30,16 @@ export const reducer = handleActions(
       loading: false,
     }),
 
-    [failAction(LIST_RUSHING)]: (state, { payload }) => ({
+    [successAction(LIST_TEAM)]: (state, { payload }) => ({
+      ...state,
+      teams: payload,
+      loading: false,
+    }),
+
+    [combineActions(failAction(LIST_RUSHING), failAction(LIST_TEAM))]: (
+      state,
+      { payload }
+    ) => ({
       ...state,
       loading: false,
       error: payload,
